@@ -1,5 +1,5 @@
 package main
-
+//   rpc 服务器的写法
 import (
 	"net"
 	"net/rpc"

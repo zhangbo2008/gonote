@@ -1,6 +1,10 @@
 // 备注：io.Copy不会主动调用close，io.Copy结束的条件是reader得到EOF
 package main
 
+
+
+
+/* 这个文件是用来 发送tcp请求的.*/
 import (
 	"fmt"
 	"io"
@@ -10,11 +14,17 @@ import (
 )
 
 func main() {
+
+
+	// 发送tcp 连接
 	addr := "wwww.baidu.com:80"        //定义主机名
 	conn, err := net.Dial("tcp", addr) //拨号操作，需要指定协议。
 	if err != nil {
 		log.Fatal(err)
 	}
+
+
+	//打印返回接过
 	fmt.Println("访问公网IP地址是：", conn.RemoteAddr().String()) /*获取“conn”中的公网地址。注意：最好是加上后面的String方法，因为他们的那些是不一样的哟·当然你打印的时候
 	  可以不加输出结果是一样的，但是你的内心是不一样的哟！*/
 	fmt.Printf("客户端链接的地址及端口是：%v\n", conn.LocalAddr()) //获取到本地的访问地址和端口。
@@ -34,5 +44,5 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Println(string(buf[:n])) //将接受的内容都读取出来。
-	conn.Close()                 //断开TCP链接。
+	defer conn.Close()                 //断开TCP链接。
 }
